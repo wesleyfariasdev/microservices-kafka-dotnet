@@ -1,10 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Infraestructure.Data;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
 
-namespace UnitTest.Infrastructure.Data;
+namespace UnitTest.Infraestructure.Data;
 
 public class LivroContextTests
 {

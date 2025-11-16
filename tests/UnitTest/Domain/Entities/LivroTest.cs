@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-
-namespace UnitTest.Domain.Entities;
+﻿namespace UnitTest.Domain.Entities;
 
 public class LivroTest
 {
