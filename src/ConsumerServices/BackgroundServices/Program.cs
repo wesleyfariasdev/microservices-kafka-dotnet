@@ -1,4 +1,4 @@
-using BackgrondServices;
+using ConsumerServices;
 using Infraestructure;
 
 var builder = Host.CreateApplicationBuilder(args);
