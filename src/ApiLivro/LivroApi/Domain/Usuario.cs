@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LivroApi.Domain;
 
@@ -8,8 +9,8 @@ public sealed class Usuario(string nome,
                             string passwordHash)
 {
     [BsonId]
-    [BsonElement("id_usuario")]
-    public string Id { get; private set; }
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
     [BsonElement("nome")]
     public string Nome { get; private set; } = nome;
     [BsonElement("email")]
