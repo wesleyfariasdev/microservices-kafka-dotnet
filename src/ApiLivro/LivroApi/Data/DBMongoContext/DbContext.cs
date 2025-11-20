@@ -14,5 +14,5 @@ public sealed class DbContext
         _database = client.GetDatabase(settings.DatabaseName);
     }
 
-    public IMongoCollection<Livro> Livros => _database.GetCollection<Livro>("Livros");
+    public IMongoCollection<Livro> Livros => _database.GetCollection<Livro>("livros");
 } 
