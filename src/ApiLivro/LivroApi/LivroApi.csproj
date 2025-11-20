@@ -15,13 +15,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Data\DBMongoContext\" />
 		<Folder Include="Dto\Response\" />
 		<Folder Include="Dto\Request\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MongoDB.Bson" Version="3.5.0" />
+		<PackageReference Include="MongoDB.Driver" Version="3.5.0" />
 	</ItemGroup>
 
 </Project>
