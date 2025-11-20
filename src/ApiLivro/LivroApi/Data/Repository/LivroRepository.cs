@@ -1,31 +1,29 @@
-﻿using LivroApi.Domain;
+﻿using LivroApi.Data.DBMongoContext;
+using LivroApi.Domain;
+using MongoDB.Driver;
 
 namespace LivroApi.Data.Repository;
 
-public class LivroRepository : ILivroRepository
+public class LivroRepository(DbContext dbContext) : ILivroRepository
 {
-    public Task Atualizar(string id, Livro livro)
+    public async Task Atualizar(string id, Livro livro)
     {
-        throw new NotImplementedException();
+        var livroExistente = await ObterLivroPorId(id);
+        if (livroExistente is null)
+            throw new KeyNotFoundException("Livro não encontrado.");
+
+        await dbContext.Livros.ReplaceOneAsync(l => l.Id == id, livro);
     }
 
-    public Task<Livro> Criar(Livro livro)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Livro> Criar(Livro livro) =>
+           await dbContext.Livros.InsertOneAsync(livro).ContinueWith(_ => livro);
 
-    public Task Deletar(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task Deletar(string id) =>
+           await dbContext.Livros.DeleteOneAsync(l => l.Id == id);
 
-    public Task<Livro> ObterLivroPorId(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Livro> ObterLivroPorId(string id) =>
+           await dbContext.Livros.Find(l => l.Id == id).FirstOrDefaultAsync();
 
-    public Task<IEnumerable<Livro>> ObterTodosLivros()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Livro>> ObterTodosLivros() =>
+           await dbContext.Livros.Find(_ => true).ToListAsync();
 }
