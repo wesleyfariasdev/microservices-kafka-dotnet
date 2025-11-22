@@ -48,10 +48,9 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "API Livros",
         Version = "v1",
-        Description = "API de exemplo com autenticação JWT"
+        Description = "API JWT"
     });
 
-    // Definição do esquema de segurança Bearer (executada uma única vez)
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -59,8 +58,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Authorization header usando o esquema Bearer.\r\n\r\n" +
-                     "Exemplo: `Bearer {seu_token}`"
+        Description = "JWT Authorization"
     });
 
     c.AddSecurityRequirement(_ => new OpenApiSecurityRequirement
