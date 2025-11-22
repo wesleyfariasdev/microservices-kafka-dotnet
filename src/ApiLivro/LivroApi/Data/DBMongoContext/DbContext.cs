@@ -17,4 +17,5 @@ public sealed class DbContext
     }
 
     public IMongoCollection<Livro> Livros => _database.GetCollection<Livro>("livros");
+    public IMongoCollection<Usuario> Usuarios => _database.GetCollection<Usuario>("usuarios");
 }
