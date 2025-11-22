@@ -1,7 +1,6 @@
 ﻿using LivroApi.Dto.Request;
 using LivroApi.Dto.Response;
-using LivroApi.Services;
-using Microsoft.AspNetCore.Http;
+using LivroApi.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LivroApi.Controllers;

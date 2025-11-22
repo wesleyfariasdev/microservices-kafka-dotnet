@@ -1,5 +1,5 @@
 ﻿using LivroApi.Dto.Request;
-using LivroApi.Services;
+using LivroApi.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ public class LivroController(ILivroServices livroServices) : ControllerBase
         var livros = await livroServices.ObterTodosLivros();
         if (livros is null)
             return NotFound();
-        
+
         return Ok(livros);
     }
 
