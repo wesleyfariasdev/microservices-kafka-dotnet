@@ -11,10 +11,9 @@ using System.Text;
 namespace LivroApi.Services;
 
 public class AuthService(IUsuarioRepository usuarioRepository,
-                         TimeSpan tokenValidity, 
                          IConfiguration configuration) : IAuthService
 {
-    private readonly TimeSpan _tokenValidity = tokenValidity;
+    private readonly TimeSpan _tokenValidity = TimeSpan.FromMinutes(20);
     private readonly string _jwtKey = configuration["Jwt:Key"]!;
 
     public async Task<AuthResponse?> LoginAsync(LoginRequest request)
