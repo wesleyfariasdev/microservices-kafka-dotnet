@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /coveragereport
 /src/BackgroundServices/appsettings.json
+/src/ApiLivro/LivroApi/.env
