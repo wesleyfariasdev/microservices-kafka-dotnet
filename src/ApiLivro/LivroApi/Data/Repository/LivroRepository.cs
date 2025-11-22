@@ -1,4 +1,5 @@
 ﻿using LivroApi.Data.DBMongoContext;
+using LivroApi.Data.Repository.Interface;
 using LivroApi.Domain;
 using MongoDB.Driver;
 

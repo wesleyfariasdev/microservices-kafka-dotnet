@@ -1,7 +1,8 @@
-﻿using LivroApi.Data.Repository;
+﻿using LivroApi.Data.Repository.Interface;
 using LivroApi.Domain;
 using LivroApi.Dto.Request;
 using LivroApi.Dto.Response;
+using LivroApi.Services.Interface;
 
 namespace LivroApi.Services;
 
