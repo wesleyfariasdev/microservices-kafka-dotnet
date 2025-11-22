@@ -1,11 +1,14 @@
 using LivroApi.Data.DBMongoContext;
 using LivroApi.Data.Repository;
+using LivroApi.Data.Repository.Interface;
 using LivroApi.Data.Settings;
 using LivroApi.Services;
+using LivroApi.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Text;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,9 +42,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -76,6 +77,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    Env.Load();
 }
 
 app.UseHttpsRedirection();
