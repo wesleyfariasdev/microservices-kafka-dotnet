@@ -1,33 +1,74 @@
-# 1 - Api de entrada
+# Arquitetura Geral
 
-- Envio para o Apache Kafka -> Solicitação de Publicação
-- Data de entrada
-- Nome da pessoa que deu entrada
-- Salva no Banco de dados MongoDb
+Os serviços são totalmente desacoplados e **não se comunicam diretamente**.  
+Toda troca de informações ocorre por meio de **tópicos no Apache Kafka**, seguindo o padrão **Event-Driven Architecture**.
 
-# 2 - Consumer Services
+Principais características:
 
-- Consome Mensagem vinda do Tópico Kafka -> Solicitação de Publicação
-- Processa Livro
-  - Apto a doação
-  - Venda
-  - Empréstimo
-- Data de Processamento
-- Pública no Tópico Kafka -> Livro Processado
-- Salva no Banco de dados MongoDb
+- Cada serviço é independente e não conhece os outros.
+- Comunicação exclusivamente assíncrona via eventos.
+- Cada serviço possui sua própria infraestrutura interna.
+- Todos utilizam o mesmo MongoDB, porém **a arquitetura prevê separação futura por bases independentes** (melhor prática em microserviços).
 
-# 3 - Api de biblioteca
+---
 
-- Consome da Livro Processado
-- Solicitação de ação sobre o livro (Compra, Empréstimo, Doação)
-- Solicitação de prolongamento de empréstimo
+# 1. API de Entrada
 
-# 4 - Serviço de notificação
+Funcionalidade:
+- Recebe solicitações de publicação de livros.
+- Publica evento `SolicitacaoPublicacao` no Kafka.
 
-- Notifica pessoa que está adquirindo o livro
-- Se for empréstimo vai ser enviado uma data de devolução estimada
-- O usuário pode solicitar prolongamento da data
-- Se for compra ou doação vai enviar a data de retirada na loja
-- Envio do endereço
-- Protocolo de retirada
-- Envio de todas as infos do livro
+Dados enviados:
+- Data de entrada  
+- Nome da pessoa que deu entrada  
+
+Persistência:
+- Armazena o registro inicial no MongoDB.
+
+---
+
+# 2. Consumer Services (Processamento)
+
+Funcionalidade:
+- Consome o evento `SolicitacaoPublicacao`.
+- Processa o livro classificando como:
+  - Apto para doação  
+  - Venda  
+  - Empréstimo  
+
+Ações:
+- Define a data de processamento.
+- Publica evento `LivroProcessado` no Kafka.
+- Persiste o resultado da análise no MongoDB.
+
+---
+
+# 3. API de Biblioteca
+
+Funcionalidade:
+- Consome o evento `LivroProcessado`.
+- Oferece endpoints para:
+  - Solicitar compra  
+  - Solicitar empréstimo  
+  - Solicitar doação  
+  - Solicitar prolongamento de empréstimo  
+
+---
+
+# 4. Serviço de Notificação
+
+Funcionalidade:
+- A partir dos eventos gerados pela API de Biblioteca:
+  - Notifica o usuário da ação realizada.
+  - Em caso de empréstimo: envia data estimada de devolução (com possibilidade de prolongamento).
+  - Em caso de compra ou doação: envia data de retirada + endereço + protocolo.
+  - Inclui informações completas do livro.
+
+---
+
+# 5. Configuração do Ambiente
+
+Na pasta **/scripts** estão os arquivos necessários para subir toda a infraestrutura:
+- Kafka + Zookeeper
+- MongoDB
+
